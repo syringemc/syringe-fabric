@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "syringe-fabric",
+  "version": "${version}",
+  "name": "Syringe",
+  "description": "",
+  "authors": [
+    "SyringeMC"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "org.syringemc.syringefabric.SyringeFabric"
+    ]
+  },
+  "mixins": [
+    "syringe-fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.10.6+build.214",
+    "fabric": "*",
+    "minecraft": "1.16.4"
+  }
+}
