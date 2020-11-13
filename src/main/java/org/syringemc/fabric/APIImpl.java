@@ -1,4 +1,4 @@
-package org.syringemc.syringefabric;
+package org.syringemc.fabric;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
