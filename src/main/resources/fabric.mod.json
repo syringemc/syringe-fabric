@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "syringe-fabric",
+  "id": "syringe",
   "version": "${version}",
   "name": "Syringe",
   "description": "",
@@ -12,11 +12,11 @@
   "environment": "server",
   "entrypoints": {
     "main": [
-      "org.syringemc.syringefabric.SyringeFabric"
+      "org.syringemc.fabric.SyringeFabric"
     ]
   },
   "mixins": [
-    "syringe-fabric.mixins.json"
+    "syringe.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.10.6+build.214",
