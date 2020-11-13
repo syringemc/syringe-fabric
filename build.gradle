@@ -10,6 +10,10 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+    mavenLocal()
+}
+
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -18,6 +22,9 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    modApi 'org.syringemc:syringe-api:1.0-SNAPSHOT'
+    include 'org.syringemc:syringe-api:1.0-SNAPSHOT'
 
     // PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
     // You may need to force-disable transitiveness on them.
@@ -47,7 +54,7 @@ tasks.withType(JavaCompile) {
 // if it is present.
 // If you remove this task, sources will not be generated.
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources"
+    archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 
@@ -55,23 +62,16 @@ jar {
     from "LICENSE"
 }
 
-// configure the maven publication
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
-            }
-            artifact(sourcesJar) {
-                builtBy remapSourcesJar
+            artifact(jar) {
+                builtBy jar
             }
         }
     }
 
-    // select the repositories you want to publish to
     repositories {
-        // uncomment to publish to the local maven
-        // mavenLocal()
+        mavenLocal()
     }
 }
