@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class APIImpl implements API {
     @Override
-    public void displayText(UUID uuid, String key, String text, Position position, org.syringe.api.text.Style style, float offset, long fadein, boolean shadow) {
+    public void displayText(UUID uuid, String key, String text, Position position, org.syringe.api.text.Style style, float offsetX, float offsetY, float scale, long fadein, boolean shadow) {
         LiteralText literal = new LiteralText(text);
         Style textStyle = Style.EMPTY
                 .withColor(TextColor.fromRgb(style.getRgb()))
@@ -35,7 +35,9 @@ public class APIImpl implements API {
         buf.writeString(key);
         buf.writeText(literal);
         buf.writeString(position.name());
-        buf.writeFloat(offset);
+        buf.writeFloat(offsetX);
+        buf.writeFloat(offsetY);
+        buf.writeFloat(scale);
         buf.writeLong(fadein);
         buf.writeBoolean(shadow);
 
