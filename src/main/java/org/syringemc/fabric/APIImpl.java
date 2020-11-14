@@ -31,7 +31,9 @@ public class APIImpl implements API {
         if (style.isObfuscated()) {
             textStyle = textStyle.withFormatting(Formatting.OBFUSCATED);
         }
-        ((StyleAccessor) textStyle).setFont(new Identifier(style.getFont()));
+        if (style.getFont() != null) {
+            ((StyleAccessor) textStyle).setFont(new Identifier(style.getFont()));
+        }
         literal.setStyle(textStyle);
 
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
