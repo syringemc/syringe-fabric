@@ -13,6 +13,7 @@ import org.syringe.api.API;
 import org.syringe.api.PacketID;
 import org.syringe.api.SyringeAPI;
 import org.syringe.api.util.Position;
+import org.syringemc.fabric.mixin.StyleAccessor;
 
 import java.util.UUID;
 
@@ -23,12 +24,14 @@ public class APIImpl implements API {
         Style textStyle = Style.EMPTY
                 .withColor(TextColor.fromRgb(style.getRgb()))
                 .withBold(style.isBold())
-                .withItalic(style.isItalic())
-                .withUnderline(style.isUnderlined())
-                .withFont(new Identifier(style.getFont()));
+                .withItalic(style.isItalic());
+        if (style.isUnderlined()) {
+            textStyle = textStyle.withFormatting(Formatting.UNDERLINE);
+        }
         if (style.isObfuscated()) {
             textStyle = textStyle.withFormatting(Formatting.OBFUSCATED);
         }
+        ((StyleAccessor) textStyle).setFont(new Identifier(style.getFont()));
         literal.setStyle(textStyle);
 
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
@@ -43,7 +46,6 @@ public class APIImpl implements API {
 
         PlayerEntity player = SyringeFabric.SERVER.getPlayerManager().getPlayer(uuid);
         Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, PacketID.DISPLAY_TEXT);
-
         ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, identifier, buf);
     }
 }
