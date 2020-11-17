@@ -50,10 +50,10 @@ public class APIImpl implements API {
     }
 
     @Override
-    public void discardText(UUID uuid, String key, float fadeout) {
+    public void discardText(UUID uuid, String key, long fadeout) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeString(key);
-        buf.writeFloat(fadeout);
+        buf.writeLong(fadeout);
 
         sendPacket(uuid, PacketID.DISCARD_TEXT, buf);
     }
