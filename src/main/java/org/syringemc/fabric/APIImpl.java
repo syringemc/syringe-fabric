@@ -46,9 +46,7 @@ public class APIImpl implements API {
         buf.writeLong(fadein);
         buf.writeBoolean(shadow);
 
-        PlayerEntity player = SyringeFabric.SERVER.getPlayerManager().getPlayer(uuid);
-        Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, PacketID.DISPLAY_TEXT);
-        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, identifier, buf);
+        sendPacket(uuid, PacketID.DISPLAY_TEXT, buf);
     }
 
     @Override
@@ -58,8 +56,12 @@ public class APIImpl implements API {
         buf.writeString(key);
         buf.writeFloat(fadeout);
 
+        sendPacket(uuid, PacketID.DISCARD_TEXT, buf);
+    }
+
+    private void sendPacket(UUID uuid, String packetId, PacketByteBuf buf) {
         PlayerEntity player = SyringeFabric.SERVER.getPlayerManager().getPlayer(uuid);
-        Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, PacketID.DISCARD_TEXT);
+        Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, packetId);
         ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, identifier, buf);
     }
 }
