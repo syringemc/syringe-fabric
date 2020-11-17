@@ -50,4 +50,16 @@ public class APIImpl implements API {
         Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, PacketID.DISPLAY_TEXT);
         ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, identifier, buf);
     }
+
+    @Override
+    public void discardText(UUID uuid, String key, float fadeout) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeUuid(uuid);
+        buf.writeString(key);
+        buf.writeFloat(fadeout);
+
+        PlayerEntity player = SyringeFabric.SERVER.getPlayerManager().getPlayer(uuid);
+        Identifier identifier = new Identifier(SyringeAPI.NAMESPACE, PacketID.DISCARD_TEXT);
+        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, identifier, buf);
+    }
 }
